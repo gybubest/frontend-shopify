@@ -1,11 +1,11 @@
 
 function SearchResults({keyWord, movieList, onNominate}) {
 
-    const showList = movieList.map((movie, index) => {
+    const showList = movieList.map((movie) => {
       return (
-        <li key={index}>
-          {movie.title} ({movie.year}) 
-          <button disabled={movie.nominated} onClick={() => onNominate(movie.title)}>Nominate</button>
+        <li key={movie.imdbID}>
+          {movie.Title} ({movie.Year}) 
+          <button disabled={movie.nominated} onClick={() => onNominate(movie.imdbID)}>Nominate</button>
         </li>
       )
     });

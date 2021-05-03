@@ -8,7 +8,7 @@ function SearchBar({handleSearch}) {
 
   return (
     <div className="SearchBar">
-      <label for="name">Movie Title</label>
+      <label htmlFor="name">Movie Title</label>
       {/* <img src={search}></img> */}
       <input type="text" onChange={e => debounced(e.target.value)}></input>
     </div>

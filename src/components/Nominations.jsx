@@ -1,11 +1,11 @@
 
 function Nominations({movieList, onRemove}) {
 
-  const showList = movieList.map((movie, index) => {
+  const showList = movieList.map((movie) => {
     return (
-      <li key={index}>
-        {movie.title} ({movie.year}) 
-        <button onClick={() => onRemove(movie.title)}>Remove</button>
+      <li key={movie.imdbID}>
+        {movie.Title} ({movie.Year}) 
+        <button onClick={() => onRemove(movie.imdbID)}>Remove</button>
       </li>
     )
   });
