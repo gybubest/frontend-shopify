@@ -1,9 +1,16 @@
+import React, { useState, useEffect } from 'react';
+import { debounce } from 'lodash';
+import search from '../icons/icon-search.svg';
 
-function SearchBar() {
+function SearchBar({handleSearch}) {
+
+  const debounced = debounce(eventData => handleSearch(eventData), 2000);
+
   return (
     <div className="SearchBar">
       <label for="name">Movie Title</label>
-      <input type="text"></input>
+      {/* <img src={search}></img> */}
+      <input type="text" onChange={e => debounced(e.target.value)}></input>
     </div>
   );
 }

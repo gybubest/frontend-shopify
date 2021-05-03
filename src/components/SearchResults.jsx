@@ -1,10 +1,8 @@
 
 function SearchResults({movieList}) {
-  const showList = movieList.map(movie => {
-    return <li>{movie.Title} ({movie.Year}) Nominate</li>
+  const showList = movieList.map((movie, index) => {
+    return <li key={index}>{movie.Title} ({movie.Year}) Nominate</li>
   });
-
-  console.log(showList)
 
   return (
     <div className="SearchResults">
