@@ -4,7 +4,7 @@ import search from '../icons/icon-search.svg';
 
 function SearchBar({handleSearch}) {
 
-  const debounced = debounce(eventData => handleSearch(eventData), 2000);
+  const debounced = debounce(eventData => handleSearch(eventData), 1000);
 
   return (
     <div className="SearchBar">
