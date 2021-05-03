@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar';
-import ResultBox from './components/ResultBox';
+import SearchResults from './components/SearchResults';
 import Nominations from './components/Nominations';
 
 function App() {
 
   const [result, setResult] = useState({keyWord: '', movieList: []});
+  const [nominations, setNominations] = useState([]);
 
   const movies = [
     {"Title":"Citizen","Year":"2001","Rated":"Not Rated","Released":"08 Jun 2001","Runtime":"172 min","Genre":"Action, Drama, Mystery, Thriller","Director":"Saravana Subaiya","Writer":"N/A","Actors":"Vasundhara Das, Devan, Cochin Hanifa, Ajith Kumar","Plot":"Antony assumes several identities and kidnaps three government officials in order to succeed in his secret mission. However, a CBI officer sets out to find the real identity of the kidnapper.","Language":"Tamil","Country":"India","Awards":"1 win.","Poster":"https://m.media-amazon.com/images/M/MV5BNDY0M2RjNDYtYjRhMC00MWNmLTllNmQtMDMzMDUwZWQwMjg3XkEyXkFqcGdeQXVyODEzOTQwNTY@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.1/10"},{"Source":"Rotten Tomatoes","Value":"78%"}],"Metascore":"N/A","imdbRating":"7.1","imdbVotes":"2,651","imdbID":"tt1039952","Type":"movie","DVD":"06 Jan 2018","BoxOffice":"N/A","Production":"N/A","Website":"N/A","Response":"True"},
@@ -15,32 +16,51 @@ function App() {
   ]
 
   const handleSearch = input => {
+    
+    const nominatedTitles = nominations.map(item => item.Title);
     const i = input.trim();
+    
     if (i) {
-      console.log(i);
-      setResult({
-        keyWord: i,
-        movieList: movies.filter(movie => movie.Title.toLowerCase().includes(i))
+      const filtered = movies.filter(item => item.Title.toLowerCase().includes(i.toLowerCase())).map(item => {
+        return ({
+          'title': item.Title,
+          'year': item.Year,
+          'nominated': nominatedTitles.includes(item.Title) ? true : false
+        })
       });
+
+      setResult({ keyWord: i, movieList: filtered });
     }
   };
 
-  console.log(result)
+  const onNominate = title => {
 
-  const handleNominate = e => {
-    console.log(e)
+    const newMovieList = result.movieList.map(item => {
+      if (item.title === title) {
+        return {...item, 'nominated': true};
+      }
+      return item;
+    });
 
-  }
+    setResult({...result, movieList: newMovieList});
 
-  const showList = result.movieList.map((movie, index) => {
-    return (
-      <ResultBox
-        movie={movie}
-        index={index}
-        onNominate={handleNominate}
-      />
-    )
-  });
+    const newNomination = result.movieList.filter(item => item.title === title)[0];
+    setNominations([...nominations, newNomination]);
+  };
+
+  const onRemove = title => {
+    const newNominationList = nominations.filter(item => item.title !== title);
+    setNominations(newNominationList);
+
+    const newMovieList = result.movieList.map(item => {
+      if (item.title === title) {
+        return {...item, 'nominated': false};
+      }
+      return item;
+    });
+
+    setResult({...result, movieList: newMovieList});
+  };
 
   return (
     <div className="App">
@@ -52,16 +72,18 @@ function App() {
           handleSearch={handleSearch}
         />
         {result.movieList.length > 0 && 
-          <div className="SearchResults">
-            <h2>Results for "{result.keyWord}"</h2>
-            <ul>
-              {showList}
-            </ul>
-          </div>
+          <SearchResults
+            keyWord={result.keyWord}
+            movieList={result.movieList}
+            onNominate={onNominate}
+          />
         }
-        <Nominations
-          movieList={result}
-        />
+        {nominations.length > 0 &&
+          <Nominations
+            movieList={nominations}
+            onRemove={onRemove}
+          />
+        }
       </header>
     </div>
   );

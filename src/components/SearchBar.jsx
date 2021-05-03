@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { debounce } from 'lodash';
 import search from '../icons/icon-search.svg';
 
