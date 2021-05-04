@@ -80,6 +80,12 @@ function App() {
           />
       </Header>
       <Main>
+          {showAlert && 
+            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+              <Alert.Heading>You've already selected 5 nominees!</Alert.Heading>
+            </Alert>
+          }
+        <MovieContainer>
           {result.movieList.length > 0 && 
             <SearchResults
               keyWord={result.keyWord}
@@ -87,17 +93,13 @@ function App() {
               onNominate={onNominate}
             />
           }
-          {showAlert && 
-            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-              <Alert.Heading>You've already selected 5 nominees!</Alert.Heading>
-            </Alert>
-          }
           {nominations.length > 0 &&
             <Nominations
               movieList={nominations}
               onRemove={onRemove}
             />
           }
+        </MovieContainer>
       </Main>
     </Wrapper>
   );
@@ -115,5 +117,14 @@ const Header = styled.div`
 `;
 
 const Main = styled.div`
-  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  margin-top: 4vh;
+`;
+
+
+const MovieContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
