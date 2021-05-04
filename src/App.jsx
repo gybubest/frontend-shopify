@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import Alert from 'react-bootstrap/Alert'
-import './App.css';
+import styled from 'styled-components'
+import Alert from 'react-bootstrap/Alert';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Nominations from './components/Nominations';
 
 function App() {
-  
   const apikey = process.env.REACT_APP_APIKEY;
   const [result, setResult] = useState({keyWord: '', movieList: []});
   const [nominations, setNominations] = useState([]);
@@ -32,7 +31,8 @@ function App() {
     
           setResult({ keyWord: i, movieList: filtered });  
         }
-      });
+      })
+      .catch(error => console.log(error));
     }
   }; 
 
@@ -70,38 +70,50 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>
-          The Shoppies
-        </h1>
-      {/* </header>
-      <body> */}
-        {showAlert && 
-          <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-            <Alert.Heading>You've already selected 5 nominees!</Alert.Heading>
-          </Alert>
-        }
-        <SearchBar
-          handleSearch={handleSearch}
-        />
-        {result.movieList.length > 0 && 
-          <SearchResults
-            keyWord={result.keyWord}
-            movieList={result.movieList}
-            onNominate={onNominate}
+    <Wrapper>
+      <Header>
+          <h1>
+            The Shoppies
+          </h1>
+          <SearchBar
+            handleSearch={handleSearch}
           />
-        }
-        {nominations.length > 0 &&
-          <Nominations
-            movieList={nominations}
-            onRemove={onRemove}
-          />
-        }
-      {/* </body> */}
-      </header>
-    </div>
+      </Header>
+      <Main>
+          {result.movieList.length > 0 && 
+            <SearchResults
+              keyWord={result.keyWord}
+              movieList={result.movieList}
+              onNominate={onNominate}
+            />
+          }
+          {showAlert && 
+            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+              <Alert.Heading>You've already selected 5 nominees!</Alert.Heading>
+            </Alert>
+          }
+          {nominations.length > 0 &&
+            <Nominations
+              movieList={nominations}
+              onRemove={onRemove}
+            />
+          }
+      </Main>
+    </Wrapper>
   );
 }
 
 export default App;
+
+const Wrapper = styled.div`
+  margin: 5%;
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Main = styled.div`
+  background-color: pink;
+`;
