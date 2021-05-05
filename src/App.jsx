@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
-import Alert from 'react-bootstrap/Alert';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import Nominations from './components/Nominations';
+import Alert from './components/Alert';
 
 function App() {
   const apikey = process.env.REACT_APP_APIKEY;
@@ -80,11 +80,13 @@ function App() {
           />
       </Header>
       <Main>
+        <AlertContainer>
           {showAlert && 
-            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-              <Alert.Heading>You've already selected 5 nominees!</Alert.Heading>
-            </Alert>
+            <Alert
+              onClose={() => setShowAlert(false)}
+            />
           }
+        </AlertContainer>
         <MovieContainer>
           {result.movieList.length > 0 && 
             <SearchResults
@@ -122,6 +124,11 @@ const Main = styled.div`
   margin-top: 4vh;
 `;
 
+const AlertContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
 
 const MovieContainer = styled.div`
   display: flex;
