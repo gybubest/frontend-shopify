@@ -1,20 +1,19 @@
 import styled from 'styled-components'
 
 function SearchResults({keyWord, movieList, onNominate}) {
-    console.log(movieList)
     const showList = movieList.map((movie) => {
       return (
-        <Movie>
+        <Movie key={movie.imdbID}>
           <li className="movie-box" key={movie.imdbID}>
             <div className="movie-info">
-              <div className="movie-title">
+              <h3 className="movie-title">
                 {movie.Title} ({movie.Year})
-              </div> 
+              </h3> 
             <button className="nominate-btn" disabled={movie.nominated} onClick={() => onNominate(movie.imdbID)}>Nominate</button>
             </div>
-            <div>
-              <img className="movie-poster" src={movie.Poster}/>
-            </div>
+            {movie.Poster !== 'N/A' && <div>
+              <img className="movie-poster" alt="poster" src={movie.Poster}/>
+            </div>}
           </li>
         </Movie>
       )
@@ -22,7 +21,7 @@ function SearchResults({keyWord, movieList, onNominate}) {
   
     return (
       <Wrapper>
-        <h3>Results for "{keyWord}"</h3>
+        <h2>Results for "{keyWord}"</h2>
         <ul>
           {showList}
         </ul>

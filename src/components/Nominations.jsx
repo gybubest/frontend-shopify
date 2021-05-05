@@ -4,17 +4,17 @@ function Nominations({movieList, onRemove}) {
 
   const showList = movieList.map((movie) => {
     return (
-      <Movie>
+      <Movie key={movie.imdbID}>
       <li className="movie-box" key={movie.imdbID}>
         <div className="movie-info">
-          <div className="movie-title">
+          <h3 className="movie-title">
             {movie.Title} ({movie.Year})
-          </div> 
+          </h3> 
         <button className="remove-btn" disabled={movie.nominated} onClick={() => onRemove(movie.imdbID)}>Remove</button>
         </div>
-        <div>
-          <img className="movie-poster" src={movie.Poster}/>
-        </div>
+        {movie.Poster !== 'N/A' && <div>
+          <img className="movie-poster" alt="poster" src={movie.Poster}/>
+        </div>}
       </li>
     </Movie>
     )
@@ -22,7 +22,7 @@ function Nominations({movieList, onRemove}) {
 
   return (
     <Wrapper>
-      <h3>Nominations</h3>
+      <h2>Nominations</h2>
       <ul>
         {showList}
       </ul>

@@ -12,7 +12,7 @@ function SearchBar({handleSearch}) {
       <SearchBox>
         <label htmlFor="name">Movie Title</label>
         <InputBox>
-          <img className="search-img" src={search}></img>
+          <img className="search-img" alt="search" src={search}></img>
           <input className="search-input" type="text" onChange={e => debounced(e.target.value)}></input>
         </InputBox>
       </SearchBox>

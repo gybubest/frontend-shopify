@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components'
 import close from '../icons/close.svg';
 
-function Alert({onClose}) {
+function Alert({onClose, showAlert}) {
 
   return (
     <Wrapper onClick={onClose}>
       <div className="alert-msg">
-        You've already selected 5 nominees!
+        {showAlert.message}
       </div>
-        <img className="alert-img" src={close} ></img>
+        <img className="alert-img" alt="Close" src={close} ></img>
     </Wrapper>
   );
 }
@@ -24,13 +24,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 50%;
+  width: 60%;
   align-items: center;
 
   .alert-msg {
     color: #c8102E;
     font-weight: bold;
-    font-size: 1.17em;
+    font-size: 1.5em;
   }
 
   .alert-img {

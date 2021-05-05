@@ -10,7 +10,7 @@ function App() {
   const apikey = process.env.REACT_APP_APIKEY;
   const [result, setResult] = useState({keyWord: '', movieList: []});
   const [nominations, setNominations] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState({show: false, message: ''});
 
   const handleSearch = input => {
     
@@ -20,7 +20,6 @@ function App() {
     if (i) {
       axios.get(`http://www.omdbapi.com/?apikey=${apikey}&s=${i}&type=movie`)
       .then(res => {
-        console.log(res.data)
         if (res.data.Response) {
           const filtered = res.data.Search.map(item => {
             return ({
@@ -30,9 +29,12 @@ function App() {
           });
     
           setResult({ keyWord: i, movieList: filtered });  
-        }
+        } 
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        setShowAlert({show: true, message: 'Not found, please try another one.'});
+      });
     }
   }; 
 
@@ -50,7 +52,7 @@ function App() {
       const newNomination = result.movieList.filter(item => item.imdbID === id)[0];
       setNominations([...nominations, newNomination]);
     } else {
-      setShowAlert(true);
+      setShowAlert({show: true, message: 'You already have 5 nominees!'});
     }
 
   };
@@ -81,9 +83,10 @@ function App() {
       </Header>
       <Main>
         <AlertContainer>
-          {showAlert && 
+          {showAlert.show && 
             <Alert
               onClose={() => setShowAlert(false)}
+              showAlert={showAlert}
             />
           }
         </AlertContainer>
