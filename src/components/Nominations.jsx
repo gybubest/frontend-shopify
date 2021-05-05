@@ -64,6 +64,16 @@ const Movie = styled.div`
     border-width: thin;
     border-radius: 3px;
     border-color: #C0C0C0;
+
+    :hover {
+      background-color: #282c34;
+      color: white;
+    }
+
+    :active {
+      position: relative;
+      top: 1px; 
+    }
   }
 
 `;

@@ -27,6 +27,10 @@ const Wrapper = styled.div`
   width: 100%;
   align-items: center;
 
+  :hover {
+    opacity: 95%;
+  }
+
   .alert-msg {
     color: #c8102E;
     font-weight: bold;

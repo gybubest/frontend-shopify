@@ -50,6 +50,10 @@ const InputBox = styled.div`
   border-radius: 3px;
   margin-top: 1vh;
 
+  :hover {
+    border-color: #002244;
+  }
+
   .search-img {
     padding: 1%;
     height: 3vh;
