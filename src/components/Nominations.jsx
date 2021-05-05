@@ -21,7 +21,7 @@ function Nominations({movieList, onRemove}) {
     <Wrapper>
       <h2>Nominations</h2>
       <ul>
-        {showList}
+        {movieList.length > 0 && showList}
       </ul>
     </Wrapper>
   );
@@ -52,6 +52,7 @@ const Movie = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       margin-right: 1vh;
+      width: 90%;
     }
   }
 

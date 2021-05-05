@@ -18,10 +18,15 @@ function SearchResults({keyWord, movieList, onNominate}) {
   
     return (
       <Wrapper>
-        <h2>Results for "{keyWord}"</h2>
-        <ul>
-          {showList}
-        </ul>
+        {movieList.length > 0 && <>
+          <h2>Results for "{keyWord}"</h2>
+          <ul>
+            {showList}
+          </ul>
+        </>}
+        {movieList.length <= 0 && <>
+          <h2>Results</h2>
+        </>}
       </Wrapper>
     );
 }
@@ -51,6 +56,7 @@ const Movie = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       margin-right: 1vh;
+      width: 90%;
     }
   }
 

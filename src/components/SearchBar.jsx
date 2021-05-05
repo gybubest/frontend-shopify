@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import { debounce } from 'lodash';
 import styled from 'styled-components'
 import search from '../icons/icon-search.svg';
@@ -10,11 +10,8 @@ function SearchBar({handleSearch}) {
   return (
     <Wrapper>
       <SearchBox>
-        <label htmlFor="name">Movie Title</label>
-        <InputBox>
           <img className="search-img" alt="search" src={search}></img>
-          <input className="search-input" type="text" onChange={e => debounced(e.target.value)}></input>
-        </InputBox>
+          <input className="search-input" type="text" placeholder="Movie Title" onChange={e => debounced(e.target.value)}></input>
       </SearchBox>
     </Wrapper>
   );
@@ -31,24 +28,15 @@ const Wrapper = styled.div`
 
 const SearchBox = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 10vh;
-  font-size: 3vh;
-
-`;
-
-const InputBox = styled.div`
-  display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  height: 10vh;
+  align-items: center;
+  height: 6vh;
   font-size: 3vh;
   border: solid;
   border-color: #C0C0C0;
   border-width: thin;
   border-radius: 3px;
-  margin-top: 1vh;
 
   :hover {
     border-color: #002244;

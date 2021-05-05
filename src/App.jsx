@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import SearchBar from './components/SearchBar';
@@ -7,12 +7,17 @@ import Nominations from './components/Nominations';
 import Alert from './components/Alert';
 
 function App() {
-  const [result, setResult] = useState({keyWord: '', movieList: []});
-  const [nominations, setNominations] = useState([]);
-  const [showAlert, setShowAlert] = useState({show: false, message: ''});
   const apiKey = process.env.REACT_APP_APIKEY;
+
+  const [result, setResult] = useState({keyWord: '', movieList: []});
+  const [nominations, setNominations] = useState(JSON.parse(localStorage.getItem('nominationsInLocalStorage')) || []);
+  const [showAlert, setShowAlert] = useState({show: false, message: ''});
+
+  useEffect(() => {
+    localStorage.setItem('nominationsInLocalStorage', JSON.stringify(nominations));
+  }, [nominations]);
+
   const handleSearch = input => {
-    
     const nominatedTitles = nominations.map(item => item.Title);
     const i = input.trim();
 
@@ -27,11 +32,10 @@ function App() {
             })
           });
     
-          setResult({ keyWord: i, movieList: filtered });  
+          setResult({ keyWord: i, movieList: filtered }); 
         } 
       })
       .catch(error => {
-        console.log(error);
         setShowAlert({show: true, message: 'Not found, please try another one.'});
       });
     }
@@ -90,19 +94,15 @@ function App() {
         </AlertContainer>
       }
         <MovieContainer>
-          {result.movieList.length > 0 && 
-            <SearchResults
-              keyWord={result.keyWord}
-              movieList={result.movieList}
-              onNominate={onNominate}
-            />
-          }
-          {nominations.length > 0 &&
-            <Nominations
-              movieList={nominations}
-              onRemove={onRemove}
-            />
-          }
+          <SearchResults
+            keyWord={result.keyWord}
+            movieList={result.movieList}
+            onNominate={onNominate}
+          />
+          <Nominations
+            movieList={nominations}
+            onRemove={onRemove}
+          />
         </MovieContainer>
       </Main>
     </Wrapper>
