@@ -7,14 +7,11 @@ function Nominations({movieList, onRemove}) {
       <Movie key={movie.imdbID}>
       <li className="movie-box" key={movie.imdbID}>
         <div className="movie-info">
-          <h3 className="movie-title">
+          <div className="movie-title">
             {movie.Title} ({movie.Year})
-          </h3> 
+          </div> 
         <button className="remove-btn" disabled={movie.nominated} onClick={() => onRemove(movie.imdbID)}>Remove</button>
         </div>
-        {movie.Poster !== 'N/A' && <div>
-          <img className="movie-poster" alt="poster" src={movie.Poster}/>
-        </div>}
       </li>
     </Movie>
     )
@@ -33,8 +30,8 @@ function Nominations({movieList, onRemove}) {
 export default Nominations;
 
 const Wrapper = styled.div`
-  background-color: #282c34;
-  color: #f5f5f7;
+  background-color: #f5f5f7;
+  color: #1d1d1f;
   width: 45%;
   border-radius: 3px;
   padding: 2%;
@@ -67,11 +64,6 @@ const Movie = styled.div`
     border-width: thin;
     border-radius: 3px;
     border-color: #C0C0C0;
-  }
-
-  .movie-poster {
-    width: 100%;
-    margin-top: 2vh;
   }
 
 `;

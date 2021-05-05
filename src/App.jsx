@@ -7,18 +7,17 @@ import Nominations from './components/Nominations';
 import Alert from './components/Alert';
 
 function App() {
-  const apikey = process.env.REACT_APP_APIKEY;
   const [result, setResult] = useState({keyWord: '', movieList: []});
   const [nominations, setNominations] = useState([]);
   const [showAlert, setShowAlert] = useState({show: false, message: ''});
-
+  const apiKey = process.env.REACT_APP_APIKEY;
   const handleSearch = input => {
     
     const nominatedTitles = nominations.map(item => item.Title);
     const i = input.trim();
 
     if (i) {
-      axios.get(`http://www.omdbapi.com/?apikey=${apikey}&s=${i}&type=movie`)
+      axios.get(`https://www.omdbapi.com/?apikey=${apiKey}&s=${i}&type=movie`)
       .then(res => {
         if (res.data.Response) {
           const filtered = res.data.Search.map(item => {
@@ -82,14 +81,14 @@ function App() {
           />
       </Header>
       <Main>
+      {showAlert.show && 
         <AlertContainer>
-          {showAlert.show && 
             <Alert
-              onClose={() => setShowAlert(false)}
+              onClose={() => setShowAlert({show: false, message: ''})}
               showAlert={showAlert}
             />
-          }
         </AlertContainer>
+      }
         <MovieContainer>
           {result.movieList.length > 0 && 
             <SearchResults
@@ -131,6 +130,7 @@ const AlertContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 4vh;
 `;
 
 const MovieContainer = styled.div`
